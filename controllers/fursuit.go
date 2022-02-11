@@ -16,6 +16,7 @@ import (
 	"strings"
 )
 
+// GetFursuitImage 获取fursuit图片
 func GetFursuitImage(ctx *gin.Context) {
 	f, err := os.Open(fmt.Sprintf("%s/%s", viper.GetString("imagePath"), ctx.Param("img")))
 	if err != nil {
@@ -27,16 +28,21 @@ func GetFursuitImage(ctx *gin.Context) {
 	ctx.Header("Content-Type", "image/jpeg")
 	io.Copy(ctx.Writer, f)
 }
+
+// GetFursuitRand 随机获取
 func GetFursuitRand(ctx *gin.Context) {
 	res := models.GetFursuitRand()
 	returnFursuitResponse(ctx, res)
 }
 
+// GetFursuitByID 根据id获取
 func GetFursuitByID(ctx *gin.Context) {
 	id := ctx.Query("fid")
-	res := models.GetFursuitById(id)
+	res := models.GetFursuitByID(id)
 	returnFursuitResponse(ctx, res)
 }
+
+// GetFursuitByName 根据名字获取
 func GetFursuitByName(ctx *gin.Context) {
 	name := ctx.Query("name")
 	res := models.GetFursuitByName(name)
@@ -49,12 +55,13 @@ func returnFursuitResponse(ctx *gin.Context, fur models.FursuitTable) {
 	data.FursuitTable = fur
 
 	if fur.Model != nil {
-		data.Url = fmt.Sprintf("http://%s%s/image/%d.jpg", ctx.Request.Host, strings.Join(u[:len(u)-1], "/"), fur.Fid)
+		data.URL = fmt.Sprintf("http://%s%s/image/%d.jpg", ctx.Request.Host, strings.Join(u[:len(u)-1], "/"), fur.Fid)
 
 	}
 	ctx.JSON(http.StatusOK, data)
 }
 
+// AddFursuit 添加
 func AddFursuit(ctx *gin.Context) {
 	var fur FursuitRequest
 	if err := ctx.ShouldBindJSON(&fur); err != nil {
@@ -66,9 +73,8 @@ func AddFursuit(ctx *gin.Context) {
 		ctx.String(http.StatusBadRequest, err.Error())
 	}
 }
-func FixFursuit(ctx *gin.Context) {
 
-}
+// DeleteFursuit 删除
 func DeleteFursuit(ctx *gin.Context) {
 	models.DeleteFursuit(ctx.Param("fid"))
 }

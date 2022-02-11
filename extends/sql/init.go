@@ -8,12 +8,15 @@ import (
 	"gorm.io/gorm"
 )
 
+// Database DB
 type Database struct {
 	Self *gorm.DB
 }
 
+// DB DB
 var DB *Database
 
+// InitDB 初始化
 func (db *Database) InitDB() (err error) {
 	DB = &Database{}
 

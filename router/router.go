@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// LoadRouter 路由
 func LoadRouter(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	// 加载中间件
 	g.Use(mw...)

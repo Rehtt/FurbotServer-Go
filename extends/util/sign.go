@@ -11,12 +11,14 @@ import (
 	"io"
 )
 
+// VisitorAuth 生成签名
 func VisitorAuth(apiPath, timestamp, authKey string) string {
 	w := md5.New()
 	io.WriteString(w, fmt.Sprintf("%s-%s-%s", apiPath, timestamp, authKey))
 	return fmt.Sprintf("%x", w.Sum(nil))
 }
 
+// AdminAuth 生成签名
 func AdminAuth(timestamp, authKey string) string {
 	w := md5.New()
 	io.WriteString(w, fmt.Sprintf("admin-%s-%s", timestamp, authKey))

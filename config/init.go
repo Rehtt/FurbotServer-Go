@@ -6,10 +6,12 @@ import (
 	"strings"
 )
 
+// Config 配置
 type Config struct {
 	Name string
 }
 
+// InitConfig 初始化配置
 func InitConfig(path string) error {
 	config := Config{
 		Name: path,

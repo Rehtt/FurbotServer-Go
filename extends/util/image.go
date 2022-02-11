@@ -10,13 +10,14 @@ import (
 	"encoding/base64"
 	"fmt"
 	"image"
-	_ "image/gif"
-	_ "image/jpeg"
-	_ "image/png"
+	_ "image/gif"  // gif 格式
+	_ "image/jpeg" // jpeg 格式
+	_ "image/png"  // png 格式
 	"io/ioutil"
 	"strings"
 )
 
+// Base64ToImageBytes base64转图片[]byte
 func Base64ToImageBytes(imageStr string) ([]byte, error) {
 	if strings.Contains(imageStr, "base64,") {
 		imageStr = strings.Split(imageStr, "base64,")[1]
@@ -32,6 +33,7 @@ func Base64ToImageBytes(imageStr string) ([]byte, error) {
 	return res, nil
 }
 
+// SaveFile 保存文件
 func SaveFile(data []byte, path string) error {
 	return ioutil.WriteFile(path, data, 644)
 }

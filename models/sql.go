@@ -9,19 +9,19 @@ import (
 	"FurbotServer-Go/extends/sql"
 	"FurbotServer-Go/extends/util"
 	"github.com/spf13/viper"
-	_ "image/jpeg"
-	_ "image/png"
 	"math/rand"
 	"strconv"
 	"time"
 )
 
+// GetAuthKeyFromQQ 获取qq对应的auth key
 func GetAuthKeyFromQQ(qq string) string {
 	var authKey string
 	sql.DB.Self.Model(&AuthTable{}).Where(map[string]interface{}{"qq": qq}).Pluck("auth_key", &authKey)
 	return authKey
 }
 
+// GetFursuitRand 随机获取
 func GetFursuitRand() (fur FursuitTable) {
 	var count int64
 	sql.DB.Self.Model(&FursuitTable{}).Count(&count)
@@ -31,16 +31,19 @@ func GetFursuitRand() (fur FursuitTable) {
 	return
 }
 
-func GetFursuitById(fid string) (fur FursuitTable) {
+// GetFursuitByID 根据id获取
+func GetFursuitByID(fid string) (fur FursuitTable) {
 	sql.DB.Self.Where(map[string]interface{}{"fid": fid}).Find(&fur)
 	return
 }
 
+// GetFursuitByName 根据名字获取
 func GetFursuitByName(name string) (fur FursuitTable) {
 	sql.DB.Self.Where(map[string]interface{}{"name": name}).Find(&fur)
 	return
 }
 
+// GetVisitorAuth 根据条件获取auth
 func GetVisitorAuth(query interface{}) (auth []AuthTable) {
 	querySQL := sql.DB.Self.Model(&AuthTable{})
 	if query != nil {
@@ -50,10 +53,12 @@ func GetVisitorAuth(query interface{}) (auth []AuthTable) {
 	return
 }
 
+// DeleteVisitorAuth 删除auth
 func DeleteVisitorAuth(qq string) {
 	sql.DB.Self.Where(map[string]interface{}{"qq": qq}).Delete(&AuthTable{})
 }
 
+// AddVisitorAuth 添加auth
 func AddVisitorAuth(qq, authKey string) bool {
 	if len(GetVisitorAuth(map[string]interface{}{"qq": qq})) != 0 {
 		return false
@@ -64,6 +69,8 @@ func AddVisitorAuth(qq, authKey string) bool {
 	})
 	return true
 }
+
+// FixVisitorAuth 修改auth
 func FixVisitorAuth(qq, authKey string) bool {
 	auth := GetVisitorAuth(map[string]interface{}{"qq": qq})
 	if len(auth) == 0 {
@@ -73,6 +80,7 @@ func FixVisitorAuth(qq, authKey string) bool {
 	return true
 }
 
+// AddFursuit 添加fursuit
 func AddFursuit(name, imageStr string) error {
 	var fid int
 	sql.DB.Self.Model(&FursuitTable{}).Select("fid + 1 as fid").Pluck("fid", &fid)
@@ -87,6 +95,7 @@ func AddFursuit(name, imageStr string) error {
 	return util.SaveFile(imageData, viper.GetString("imagePath")+"/"+strconv.Itoa(fid)+".jpg")
 }
 
+// DeleteFursuit 删除fursuit
 func DeleteFursuit(fid string) {
 	sql.DB.Self.Where(map[string]interface{}{"fid": fid}).Delete(&FursuitTable{})
 }

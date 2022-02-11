@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-// 验证
+// VisitorAuth 验证
 func VisitorAuth(qq, timestamp, sign, apiPath string) bool {
 	t, err := strconv.ParseInt(timestamp, 10, 64)
 	if err != nil {
@@ -30,7 +30,7 @@ func VisitorAuth(qq, timestamp, sign, apiPath string) bool {
 	return true
 }
 
-// 验证
+// AdminAuth 验证
 func AdminAuth(auth string) bool {
 	if util.AdminAuth(strings.Split(auth, ",")[0], viper.GetString("adminKey")) == auth {
 		return true

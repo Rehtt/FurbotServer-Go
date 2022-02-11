@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// 强制浏览器不使用缓存
+// NoCache 强制浏览器不使用缓存
 func NoCache(c *gin.Context) {
 	c.Header("Cache-Control", "no-cache, no-store, max-age=0, must-revalidate, value")
 	c.Header("Expires", "Thu, 01 Jan 1970 00:00:00 GMT")
@@ -14,7 +14,7 @@ func NoCache(c *gin.Context) {
 	c.Next()
 }
 
-//跨域
+// Options 跨域
 func Options(c *gin.Context) {
 	if c.Request.Method != "OPTIONS" {
 		c.Next()

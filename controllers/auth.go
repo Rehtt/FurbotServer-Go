@@ -11,11 +11,13 @@ import (
 	"net/http"
 )
 
+// GetAuthList 获取auth列表
 func GetAuthList(ctx *gin.Context) {
 	data := models.GetVisitorAuth(nil)
 	ctx.JSON(http.StatusOK, data)
 }
 
+// AddAuth 添加auth
 func AddAuth(ctx *gin.Context) {
 	var request AuthRequest
 	if err := ctx.ShouldBindJSON(&request); err != nil {
@@ -28,6 +30,7 @@ func AddAuth(ctx *gin.Context) {
 	ctx.Status(http.StatusOK)
 }
 
+// FixAuth 修改auth
 func FixAuth(ctx *gin.Context) {
 	var request AuthRequest
 	if err := ctx.ShouldBindJSON(&request); err != nil {
@@ -40,6 +43,7 @@ func FixAuth(ctx *gin.Context) {
 	ctx.Status(http.StatusOK)
 }
 
+// DeleteAuth 删除auth
 func DeleteAuth(ctx *gin.Context) {
 	models.DeleteVisitorAuth(ctx.Param("qq"))
 	ctx.Status(http.StatusOK)

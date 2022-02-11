@@ -9,6 +9,6 @@ import "FurbotServer-Go/models"
 
 type getFursuitResponse struct {
 	models.FursuitTable
-	Url   string `json:"url"`
+	URL   string `json:"url"`
 	Thumb string `json:"thumb"`
 }

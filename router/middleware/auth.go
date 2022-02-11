@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// VisitorAuth 访客鉴权
 func VisitorAuth(ctx *gin.Context) {
 	qq := ctx.Query("qq")
 	timestamp := ctx.Query("timestamp")
@@ -23,6 +24,7 @@ func VisitorAuth(ctx *gin.Context) {
 	ctx.Next()
 }
 
+// AdminAuth 管理鉴权
 func AdminAuth(ctx *gin.Context) {
 	auth := ctx.GetHeader("admin-auth")
 	if !models.AdminAuth(auth) {
