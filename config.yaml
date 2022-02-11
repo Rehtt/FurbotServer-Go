@@ -1,0 +1,19 @@
+server:
+  addr: 0.0.0.0
+  port: 80
+
+# 管理员密钥
+authKey: Xz0aCixrjL8hgIAG
+
+imagePath: "./image"    # 图片存储路径
+
+db:
+  use: mysql            # 选择数据库，mysql与sqlite 二选一
+  mysql:                # mysql 配置
+    addr: 127.0.0.1
+    username: root
+    password: root
+    port: 3306
+    database: test
+  sqlite:               # sqlite配置
+    path: ./database.db
